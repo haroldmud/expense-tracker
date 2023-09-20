@@ -45,12 +45,12 @@ export class BudgetService {
   ): Promise<any> {
     const updateOne = await this.findOne(id);
 
-    updateOne.item = item !== undefined ? item : updateOne.item;
-    updateOne.budget = budget !== undefined ? budget : updateOne.budget;
-    updateOne.category = category !== undefined ? category : updateOne.category;
-    updateOne.priority = priority !== undefined ? priority : updateOne.priority;
-    updateOne.description =
-      description !== undefined ? description : updateOne.description;
+    updateOne.item = item ?? updateOne.item;
+    updateOne.budget = budget ?? updateOne.budget;
+    updateOne.category = category ?? updateOne.category;
+    updateOne.priority = priority ?? updateOne.priority;
+    updateOne.description = description ?? updateOne.description;
+
     return updateOne.save();
   }
 
