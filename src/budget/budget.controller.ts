@@ -16,12 +16,16 @@ export class BudgetController {
 
   @Post('create')
   create(
-    @Body('item') item: string,
-    @Body('budget') budget: number,
-    @Body('category') category: string,
-    @Body('priority') priority: string,
-    @Body('description') description: string,
+    @Body()
+    body: {
+      item: string;
+      budget: number;
+      category: string;
+      priority: string;
+      description: string;
+    },
   ): Promise<BudgetDocument> {
+    const { item, budget, category, priority, description } = body;
     return this.budgetService.create(
       item,
       budget,
@@ -44,12 +48,16 @@ export class BudgetController {
   @Put(':id')
   update(
     @Param('id') id: string,
-    @Body('item') item: string,
-    @Body('budget') budget: number,
-    @Body('category') category: string,
-    @Body('priority') priority: string,
-    @Body('description') description: string,
+    @Body()
+    Body: {
+      item: string;
+      budget: number;
+      category: string;
+      priority: string;
+      description: string;
+    },
   ): Promise<BudgetDocument> {
+    const { item, budget, category, priority, description } = Body;
     return this.budgetService.update(
       id,
       item,
