@@ -7,7 +7,7 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { ExpenseDocument } from './expenses.schema';
+import { Expense, ExpenseDocument } from './expenses.schema';
 import { ExpensesService } from './expenses.service';
 
 @Controller('expenses')
@@ -17,10 +17,7 @@ export class ExpensesController {
   @Post('create')
   create(
     @Body()
-    body: {
-      spending: string;
-      price: number;
-    },
+    body: Expense,
   ): Promise<ExpenseDocument> {
     const { spending, price } = body;
     return this.expensesService.create(spending, price);
