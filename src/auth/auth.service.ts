@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './schemas/user.schema';
 import { Model } from 'mongoose';
+import * as   from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -11,5 +12,6 @@ export class AuthService {
   ) {}
   async signUp(signUpDto) {
     const { name, email, password } = signUpDto;
+    const crypting
   }
 }
