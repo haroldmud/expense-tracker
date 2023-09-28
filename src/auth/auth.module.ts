@@ -9,7 +9,9 @@ import { JwtModule } from '@nestjs/jwt';
 @Module({
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt' }),
-    JwtModule.registerAsync
+    JwtModule.registerAsync({
+      
+    })
     MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
   ],
   controllers: [AuthController],
