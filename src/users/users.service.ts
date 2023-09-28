@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { UsersDocument } from './users.schema';
+import { UsersDocument } from './schema/users.schema';
 
 @Injectable()
 export class UsersService {
@@ -14,11 +14,15 @@ export class UsersService {
     private readonly UsersModel: Model<UsersDocument>,
   ) {}
 
-  async create(username: string, password: string): Promise<UsersDocument> {
-    if (!username || !password) {
-      throw new BadRequestException('please provide both values');
+  async create(
+    username: string,
+    email: string,
+    password: string,
+  ): Promise<UsersDocument> {
+    if (!username || !username || !password) {
+      throw new BadRequestException('please provide all values');
     }
-    return new this.UsersModel({ username, password }).save();
+    return new this.UsersModel({ username, email, password }).save();
   }
 
   async findAll(): Promise<UsersDocument[]> {

@@ -3,10 +3,14 @@ import { Document } from 'mongoose';
 
 export type UsersDocument = Users & Document;
 
-@Schema()
+@Schema({
+  timestamps: true,
+})
 export class Users {
-  @Prop({ require: true })
+  @Prop({ unique: [true, 'this username already exists'] })
   username: string;
+  @Prop({ unique: [true, 'this username already exists'] })
+  email: string;
   @Prop({ require: true })
   password: string;
 }
