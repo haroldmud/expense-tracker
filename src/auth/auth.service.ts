@@ -2,15 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './schemas/user.schema';
 import { Model } from 'mongoose';
-import * as bcrypt  from 'bcrypt';
-import { JwtModule } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectModel(User.name)
     private userModel: Model<User>,
-    private jwtService: JwtModule,
+    private jwtService: JwtService,
   ) {}
   async signUp(signUpDto) {
     const { name, email, password } = signUpDto;
@@ -21,6 +21,7 @@ export class AuthService {
       email,
       password: hashedPassword,
     });
-    return user;
+    const token = this.jwtService.sign({ id: user._id });
+    // the  'sign' helps us to generate a jwt token
   }
 }
