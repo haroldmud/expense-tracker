@@ -4,14 +4,21 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { BudgetModule } from './budget/budget.module';
 import { ExpensesModule } from './expenses/expenses.module';
+import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+require('dotenv').config();
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      envFilePath: 'env',
+      isGlobal: true,
+    }),
     BudgetModule,
     ExpensesModule,
-    MongooseModule.forRoot(
-      'mongodb+srv://budget:DUTt0i2obN6cz2X9@xo.6cb5vsr.mongodb.net/',
-    ),
+    MongooseModule.forRoot(process.env.DB_URI),
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

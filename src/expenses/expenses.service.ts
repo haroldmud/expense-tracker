@@ -1,26 +1,41 @@
 import { Injectable } from '@nestjs/common';
-import { CreateExpenseDto } from './dto/create-expense.dto';
-import { UpdateExpenseDto } from './dto/update-expense.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { ExpenseDocument } from './expenses.schema';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class ExpensesService {
-  create(createExpenseDto: CreateExpenseDto) {
-    return 'This action adds a new expense';
+  constructor(
+    @InjectModel('Expense')
+    private readonly ExpenseModel: Model<ExpenseDocument>,
+  ) {}
+
+  async create(spending: string, price: number): Promise<ExpenseDocument> {
+    const currentTime = new Date();
+    const result = new this.ExpenseModel({
+      spending,
+      price,
+      time: currentTime,
+    }).save();
+    return result;
   }
 
-  findAll() {
-    return `This action returns all expenses`;
+  async findAll(): Promise<ExpenseDocument[]> {
+    return this.ExpenseModel.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} expense`;
+  async findOne(id: string): Promise<ExpenseDocument> {
+    return this.ExpenseModel.findById(id);
   }
 
-  update(id: number, updateExpenseDto: UpdateExpenseDto) {
-    return `This action updates a #${id} expense`;
+  async update(id: string, spending: string, price: number) {
+    const result = await this.findOne(id);
+    result.spending = spending ?? result.spending;
+    result.price = price ?? result.price;
+    return result.save();
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} expense`;
+  async remove(id: string) {
+    return this.ExpenseModel.findByIdAndDelete(id);
   }
 }

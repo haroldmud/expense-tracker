@@ -1,34 +1,75 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Put,
+  Delete,
+} from '@nestjs/common';
 import { BudgetService } from './budget.service';
-import { CreateBudgetDto } from './dto/create-budget.dto';
-import { UpdateBudgetDto } from './dto/update-budget.dto';
+import { BudgetDocument } from './budget.schema';
 
 @Controller('budget')
 export class BudgetController {
   constructor(private readonly budgetService: BudgetService) {}
 
-  @Post()
-  create(@Body() createBudgetDto: CreateBudgetDto) {
-    return this.budgetService.create(createBudgetDto);
+  @Post('create')
+  create(
+    @Body()
+    body: {
+      item: string;
+      budget: number;
+      category: string;
+      priority: string;
+      description: string;
+    },
+  ): Promise<BudgetDocument> {
+    const { item, budget, category, priority, description } = body;
+    return this.budgetService.create(
+      item,
+      budget,
+      category,
+      priority,
+      description,
+    );
   }
 
   @Get()
-  findAll() {
+  findAll(): Promise<BudgetDocument[]> {
     return this.budgetService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.budgetService.findOne(+id);
+  findOne(@Param('id') id: string): Promise<BudgetDocument> {
+    return this.budgetService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBudgetDto: UpdateBudgetDto) {
-    return this.budgetService.update(+id, updateBudgetDto);
+  @Put(':id')
+  update(
+    @Param('id') id: string,
+    @Body()
+    Body: {
+      item: string;
+      budget: number;
+      category: string;
+      priority: string;
+      description: string;
+    },
+  ): Promise<BudgetDocument> {
+    const { item, budget, category, priority, description } = Body;
+    return this.budgetService.update(
+      id,
+      item,
+      budget,
+      category,
+      priority,
+      description,
+    );
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.budgetService.remove(+id);
+  remove(@Param('id') id: string): Promise<BudgetDocument> {
+    return this.budgetService.remove(id);
   }
 }
