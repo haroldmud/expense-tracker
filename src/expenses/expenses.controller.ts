@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { Expense, ExpenseDocument } from './expenses.schema';
 import { ExpensesService } from './expenses.service';
+import { UpdateExpenseDto } from './dto/update-expense.dto';
 
 @Controller('expenses')
 export class ExpensesController {
@@ -37,11 +38,7 @@ export class ExpensesController {
   update(
     @Param('id') id: string,
     @Body()
-    Body: {
-      spending: string;
-      price: number;
-      time: Date;
-    },
+    Body: UpdateExpenseDto,
   ): Promise<ExpenseDocument> {
     const { spending, price } = Body;
     return this.expensesService.update(id, spending, price);
