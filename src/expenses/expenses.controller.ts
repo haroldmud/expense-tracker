@@ -7,8 +7,10 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { Expense, ExpenseDocument } from './expenses.schema';
+import { ExpenseDocument } from './expenses.schema';
 import { ExpensesService } from './expenses.service';
+import { UpdateExpenseDto } from './dto/update-expense.dto';
+import { CreateExpenseDto } from './dto/create-expense.dto';
 
 @Controller('expenses')
 export class ExpensesController {
@@ -17,9 +19,9 @@ export class ExpensesController {
   @Post('create')
   create(
     @Body()
-    body: Expense,
+    createExpenseDto: CreateExpenseDto,
   ): Promise<ExpenseDocument> {
-    const { spending, price } = body;
+    const { spending, price } = createExpenseDto;
     return this.expensesService.create(spending, price);
   }
 
@@ -37,13 +39,9 @@ export class ExpensesController {
   update(
     @Param('id') id: string,
     @Body()
-    Body: {
-      spending: string;
-      price: number;
-      time: Date;
-    },
+    updateExpenseDto: UpdateExpenseDto,
   ): Promise<ExpenseDocument> {
-    const { spending, price } = Body;
+    const { spending, price } = updateExpenseDto;
     return this.expensesService.update(id, spending, price);
   }
 
