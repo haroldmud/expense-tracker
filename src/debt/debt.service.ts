@@ -40,7 +40,7 @@ export class DebtService {
     return updateOne;
   }
 
-  async delete(id: string): Promise<DebtDocument[]> {
+  async delete(id: string): Promise<DebtDocument> {
     return this.DebtModel.findByIdAndRemove(id);
   }
 }
