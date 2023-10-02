@@ -6,6 +6,7 @@ import { BudgetModule } from './budget/budget.module';
 import { ExpensesModule } from './expenses/expenses.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { DebtModule } from './debt/debt.module';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 
@@ -19,6 +20,7 @@ require('dotenv').config();
     ExpensesModule,
     MongooseModule.forRoot(process.env.DB_URI),
     AuthModule,
+    DebtModule,
   ],
   controllers: [AppController],
   providers: [AppService],
