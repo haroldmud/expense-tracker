@@ -9,6 +9,8 @@ import {
 } from '@nestjs/common';
 import { BudgetService } from './budget.service';
 import { BudgetDocument } from './budget.schema';
+import { CreateBudgetDto } from './dto/create-budget.dto';
+import { UpdateBudgetDto } from './dto/update-budget.dto';
 
 @Controller('budget')
 export class BudgetController {
@@ -17,15 +19,9 @@ export class BudgetController {
   @Post('create')
   create(
     @Body()
-    body: {
-      item: string;
-      budget: number;
-      category: string;
-      priority: string;
-      description: string;
-    },
+    createBudgetDto: CreateBudgetDto,
   ): Promise<BudgetDocument> {
-    const { item, budget, category, priority, description } = body;
+    const { item, budget, category, priority, description } = createBudgetDto;
     return this.budgetService.create(
       item,
       budget,
@@ -49,15 +45,9 @@ export class BudgetController {
   update(
     @Param('id') id: string,
     @Body()
-    Body: {
-      item: string;
-      budget: number;
-      category: string;
-      priority: string;
-      description: string;
-    },
+    updateBudgetDtoy: UpdateBudgetDto,
   ): Promise<BudgetDocument> {
-    const { item, budget, category, priority, description } = Body;
+    const { item, budget, category, priority, description } = updateBudgetDtoy;
     return this.budgetService.update(
       id,
       item,

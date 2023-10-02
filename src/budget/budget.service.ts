@@ -42,7 +42,7 @@ export class BudgetService {
     category: string,
     priority: string,
     description?: string,
-  ): Promise<any> {
+  ): Promise<BudgetDocument> {
     const updateOne = await this.findOne(id);
 
     updateOne.item = item ?? updateOne.item;
