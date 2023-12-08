@@ -46,7 +46,7 @@ export class ExpensesController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string): Promise<ExpenseDocument> {
+  remove(@Param('id') id: string): any {
     return this.expensesService.remove(id);
   }
 }
