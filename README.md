@@ -1,2 +1,2 @@
-s
+
 fghjkl# expense-tracker
